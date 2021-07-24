@@ -105,4 +105,12 @@ public class WorkerNeuron extends Neuron {
 			}
 		}
 	}
+	
+	/**
+	 * Getter of all connections
+	 * @return The connections
+	 */
+	public ArrayList<Connection> getConnections() {
+		return connections;
+	}
 }

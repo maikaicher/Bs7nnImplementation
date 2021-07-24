@@ -246,5 +246,33 @@ public class NeuronalNetwork {
 			l.resetMe();
 		}
 	}
+	
+	/**
+	 * Sets all weights to new values
+	 * @param weights The new weight values
+	 * @param withBias Needed for error handling
+	 * @throws InconsistentValueException If the number of given weights differs from the needed number of weights
+	 */
+	public void setWeights(double[] weights, boolean withBias) throws InconsistentValueException {
+		int noOfExpectedWeights = getNoOfDenseConnects(withBias);
+		if (weights.length != noOfExpectedWeights) {
+			throw new InconsistentValueException(String.valueOf(weights.length), String.valueOf(noOfExpectedWeights), "no of weights", "setWeights");
+		}
+		// take over all values
+		int pos = 0;
+		for (NeuronLayer l : hiddenLayers) {
+			for (WorkerNeuron wn : l.getNeuronList()) {
+				for (Connection c : wn.getConnections()) {
+					c.setWeight(weights[pos++]);
+				}
+			}
+		}
+		
+		for (WorkerNeuron wn : outputs) {
+			for (Connection c : wn.getConnections()) {
+				c.setWeight(weights[pos++]);
+			}
+		}
+	}
 
 }
